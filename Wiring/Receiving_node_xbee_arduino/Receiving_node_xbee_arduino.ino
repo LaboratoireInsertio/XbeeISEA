@@ -18,7 +18,6 @@
  */
 
 #include <XBee.h>
-//#include <Servo.h>
 
 /*
 This example is for Series 2 XBee
@@ -37,12 +36,9 @@ ModemStatusResponse msr = ModemStatusResponse();
 
 void setup() {
 
-  Serial1.begin(57600);
-
   // start serial
-  // Serial1.begin(57600);
+  Serial1.begin(57600);
   xbee.begin(Serial1);
-
 
   pinMode(13, OUTPUT);
 
@@ -82,22 +78,10 @@ void loop() {
       // set dataLed PWM to value of the first byte in the data
       int data = rx.getData(0);
 
-      //Serial.println(data);  //analogWrite(dataLed, rx.getData(0));
-
       data = map(data, 0, 255, 0, 255);
-      //servoA.write(data);
       analogWrite(10, data);
-      analogWrite(11, data);
-
-      //if (data > 127)
-      //  digitalWrite(13, HIGH);
-      //else
-      //  digitalWrite(13, LOW);
-
-      
+      analogWrite(11, data);      
     }
-   // digitalWrite(13, HIGH);
   }
-
 }
 
