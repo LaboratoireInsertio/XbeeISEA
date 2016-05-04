@@ -18,7 +18,7 @@
  */
 
 #include <XBee.h>
-#include <Servo.h>
+//#include <Servo.h>
 
 /*
 This example is for Series 2 XBee
@@ -28,11 +28,11 @@ This example is for Series 2 XBee
 
 XBee xbee = XBee();
 XBeeResponse response = XBeeResponse();
-// create reusable response objects for responses we expect to handle 
+// create reusable response objects for responses we expect to handle
 ZBRxResponse rx = ZBRxResponse();
 ModemStatusResponse msr = ModemStatusResponse();
 
-Servo servoA;
+//Servo servoA;
 
 
 void setup() {
@@ -40,10 +40,29 @@ void setup() {
   Serial.begin(57600);
 
   // start serial
- // Serial1.begin(57600);
+  // Serial1.begin(57600);
   xbee.begin(Serial);
 
-  servoA.attach(16);
+
+  pinMode(13, OUTPUT);
+
+
+  //servoA.attach(16);
+
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(10, OUTPUT);
+
+  digitalWrite(7, HIGH);
+  digitalWrite(8, LOW);
+
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+  pinMode(11, OUTPUT);
+
+  digitalWrite(12, HIGH);
+  digitalWrite(13, LOW);
+
 }
 
 // continuously reads packets, looking for ZB Receive or Modem Status
@@ -65,9 +84,20 @@ void loop() {
 
       Serial.println(data);  //analogWrite(dataLed, rx.getData(0));
 
-      data = map(data,0,255,0,180);
-      servoA.write(data);
+      data = map(data, 0, 255, 0, 255);
+      //servoA.write(data);
+      digitalWrite(10, data);
+      digitalWrite(11, data);
+
+      //if (data > 127)
+      //  digitalWrite(13, HIGH);
+      //else
+      //  digitalWrite(13, LOW);
+
+      
     }
+    digitalWrite(13, HIGH);
   }
+
 }
 

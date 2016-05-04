@@ -77,24 +77,21 @@ void loop() {
   //payload[1] = pin5 & 0xff;
   //payload[0] = pin5;
   
-  //Serial.print(abs(pin5 - lastPin5),DEC);
-  //Serial.print(" ");
-  //Serial.println();
+  Serial.print(abs(pin5 - lastPin5),DEC);
+  Serial.print(" ");
+  Serial.println();
 
 
   // send only when something changes
   if(abs(pin5 - lastPin5) > 2){
-    //sendPacket(addr64_n0);
-    //sendPacket(addr64_n1);
+    sendPacket(addr64_n0);
+    sendPacket(addr64_n1);
     //sendPacket(addr64_n2);
     //sendPacket(addr64_n3);
     //sendPacket(addr64_n4);
-    sendPacket(addr64_broad);
-    Serial.println("Send!");
+    //sendPacket(0x000000000000ffff);
+    //Serial.println("Send!");
   }
-
-
-
 
   delay(50);
 }
