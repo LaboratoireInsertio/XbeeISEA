@@ -40,6 +40,12 @@ Servo servoC;
 
 void setup() {
 
+  // start serial (Serial: 0 (RX) and 1 (TX). Used to receive (RX)
+  // and transmit (TX) TTL serial data using the ATmega32U4 hardware
+  // serial capability. Note that on the Leonardo, the Serial class
+  // refers to USB (CDC) communication; for TTL serial on pins 0 and
+  // 1, use the Serial1 class.
+
   // start serial
   Serial1.begin(57600);
   xbee.begin(Serial1);
