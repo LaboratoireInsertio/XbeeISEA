@@ -90,9 +90,9 @@ void loop() {
   if(abs(pin5 - lastPin5) > 2){
     sendPacket(addr64_n0);
     sendPacket(addr64_n1);
-    //sendPacket(addr64_n2);
-    //sendPacket(addr64_n3);
-    //sendPacket(addr64_n4);
+    sendPacket(addr64_n2);
+    sendPacket(addr64_n3);
+    sendPacket(addr64_n4);
     //sendPacket(0x000000000000ffff);
     //Serial.println("Send!");
   }
