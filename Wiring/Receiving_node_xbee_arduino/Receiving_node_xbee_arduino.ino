@@ -18,6 +18,7 @@
  */
 
 #include <XBee.h>
+#include <Servo.h>
 
 /*
 This example is for Series 2 XBee
@@ -31,7 +32,7 @@ XBeeResponse response = XBeeResponse();
 ZBRxResponse rx = ZBRxResponse();
 ModemStatusResponse msr = ModemStatusResponse();
 
-//Servo servoA;
+Servo servoA;
 
 
 void setup() {
@@ -40,10 +41,12 @@ void setup() {
   Serial1.begin(57600);
   xbee.begin(Serial1);
 
+
   pinMode(13, OUTPUT);
 
 
   //servoA.attach(16);
+  servoA.attach(A3);
 
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
@@ -77,10 +80,12 @@ void loop() {
 
       // set dataLed PWM to value of the first byte in the data
       int data = rx.getData(0);
-
-      data = map(data, 0, 255, 0, 255);
+      
       analogWrite(10, data);
-      analogWrite(11, data);      
+      analogWrite(11, data); 
+      data = map(data, 0, 255, 0, 180);
+      servoA.write(data);
+           
     }
   }
 }
