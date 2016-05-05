@@ -39,12 +39,6 @@ XBeeAddress64 addr64_n2 = XBeeAddress64(0x0013a200, 0x40e66c49);
 XBeeAddress64 addr64_n3 = XBeeAddress64(0x0013a200, 0x40e66c18);
 XBeeAddress64 addr64_n4 = XBeeAddress64(0x0013a200, 0x40e66c2f);
 
-// for broadcasting to all nodes in the network
-//XBeeAddress64 addr64_broad = XBeeAddress64(0x00000000, 0x0000ffff);
-
-//ZBTxRequest zbTx = ZBTxRequest(addr64_n0, payload, sizeof(payload));
-//ZBTxStatusResponse txStatus = ZBTxStatusResponse();
-
 int pin5 = 0;
 int lastPin5 = 0;
 //int val;
@@ -64,8 +58,6 @@ void setup() {
 }
 
 void loop() {
-  //xbee.readPacket();
-
   // break down 10-bit reading into two bytes and place in payload
   lastPin5 = pin5;
   pin5 = analogRead(5)/4;
@@ -81,7 +73,6 @@ void loop() {
   //Serial.print(" ");
   //Serial.println();
 
-
   // send only when something changes
   if(abs(pin5 - lastPin5) > 2){
     sendPacket(addr64_n0);
@@ -89,8 +80,6 @@ void loop() {
     sendPacket(addr64_n2);
     sendPacket(addr64_n3);
     sendPacket(addr64_n4);
-    //sendPacket(0x000000000000ffff);
-    //Serial.println("Send!");
   }
 
   delay(50);
@@ -110,39 +99,5 @@ void sendPacket(XBeeAddress64 addr64) {
   txRequest.setOption(1);
   // And send it
   xbee.send(txRequest);
-
-  /*
-  // after sending a tx request, we expect a status response
-   // wait up to half second for the status response
-   if (xbee.readPacket(500)) {
-   // got a response!
-   
-   // should be a znet tx status            	
-   if (xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE) {
-   xbee.getResponse().getZBTxStatusResponse(txStatus);
-   
-   // get the delivery status, the fifth byte
-   if (txStatus.getDeliveryStatus() == SUCCESS) {
-   // success.  time to celebrate
-   flashLed(statusLed, 5, 50);
-   Serial.println(":)");
-   } 
-   else {
-   // the remote XBee did not receive our packet. is it powered on?
-   flashLed(errorLed, 3, 500);
-   //Serial.println(":(");
-   }
-   }
-   } 
-   else if (xbee.getResponse().isError()) {
-   //nss.print("Error reading packet.  Error code: ");  
-   //nss.println(xbee.getResponse().getErrorCode());
-   } 
-   else {
-   // local XBee did not provide a timely TX Status Response -- should not happen
-   flashLed(errorLed, 2, 50);
-   Serial.println(":(");
-   }
-   */
 }
 
