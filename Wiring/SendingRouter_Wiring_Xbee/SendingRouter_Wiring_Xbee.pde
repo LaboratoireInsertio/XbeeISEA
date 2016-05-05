@@ -64,7 +64,7 @@ void setup() {
 }
 
 void loop() {
-  xbee.readPacket();
+  //xbee.readPacket();
 
   // break down 10-bit reading into two bytes and place in payload
   lastPin5 = pin5;
@@ -84,11 +84,11 @@ void loop() {
 
   // send only when something changes
   if(abs(pin5 - lastPin5) > 2){
-    sendPacket(addr64_n0);
-    sendPacket(addr64_n1);
-    sendPacket(addr64_n2);
-    sendPacket(addr64_n3);
-    sendPacket(addr64_n4);
+    sendPacket(addr64_n0, 0x00000000);
+    sendPacket(addr64_n1, 0x00000001);
+    sendPacket(addr64_n2, 0x00000002);
+    sendPacket(addr64_n3, 0x00000003);
+    sendPacket(addr64_n4, 0x00000004);
     //sendPacket(0x000000000000ffff);
     //Serial.println("Send!");
   }
@@ -96,15 +96,18 @@ void loop() {
   delay(50);
 }
 
-void sendPacket(XBeeAddress64 addr64) {
+void sendPacket(XBeeAddress64 addr64, uint16_t addr16) {
   // Prepare the Zigbee Transmit Request API packet
   ZBTxRequest txRequest;
   txRequest.setAddress64(addr64);
+  txRequest.setAddress16(addr16);
   uint8_t payload1[] = {
     0
   };
   payload1[0] = pin5;
   txRequest.setPayload(payload1, sizeof(payload1));
+  // To send asynchronous messages
+  txRequest.setFrameId(0);
   // And send it
   xbee.send(txRequest);
 

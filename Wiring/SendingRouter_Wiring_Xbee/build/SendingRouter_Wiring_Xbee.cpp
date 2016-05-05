@@ -68,7 +68,7 @@ void setup() {
 }
 
 void loop() {
-  xbee.readPacket();
+  //xbee.readPacket();
 
   // break down 10-bit reading into two bytes and place in payload
   lastPin5 = pin5;
@@ -109,6 +109,8 @@ void sendPacket(XBeeAddress64 addr64) {
   };
   payload1[0] = pin5;
   txRequest.setPayload(payload1, sizeof(payload1));
+  // to send asynchronous messages
+  txRequest.setFrameId(0);
   // And send it
   xbee.send(txRequest);
 
