@@ -40,7 +40,7 @@ XBeeAddress64 addr64_n3 = XBeeAddress64(0x0013a200, 0x40e66c18);
 XBeeAddress64 addr64_n4 = XBeeAddress64(0x0013a200, 0x40e66c2f);
 
 // for broadcasting to all nodes in the network
-XBeeAddress64 addr64_broad = XBeeAddress64(0x00000000, 0x0000ffff);
+//XBeeAddress64 addr64_broad = XBeeAddress64(0x00000000, 0x0000ffff);
 
 //ZBTxRequest zbTx = ZBTxRequest(addr64_n0, payload, sizeof(payload));
 //ZBTxStatusResponse txStatus = ZBTxStatusResponse();
@@ -105,7 +105,7 @@ void sendPacket(XBeeAddress64 addr64) {
   };
   payload1[0] = pin5;
   txRequest.setPayload(payload1, sizeof(payload1));
-  // to send asynchronous messages
+  // To send asynchronous messages
   txRequest.setFrameId(0);
   // And send it
   xbee.send(txRequest);

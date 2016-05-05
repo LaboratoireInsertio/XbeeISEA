@@ -40,7 +40,7 @@ XBeeAddress64 addr64_n3 = XBeeAddress64(0x0013a200, 0x40e66c18);
 XBeeAddress64 addr64_n4 = XBeeAddress64(0x0013a200, 0x40e66c2f);
 
 // for broadcasting to all nodes in the network
-XBeeAddress64 addr64_broad = XBeeAddress64(0x00000000, 0x0000ffff);
+//XBeeAddress64 addr64_broad = XBeeAddress64(0x00000000, 0x0000ffff);
 
 //ZBTxRequest zbTx = ZBTxRequest(addr64_n0, payload, sizeof(payload));
 //ZBTxStatusResponse txStatus = ZBTxStatusResponse();
@@ -84,11 +84,11 @@ void loop() {
 
   // send only when something changes
   if(abs(pin5 - lastPin5) > 2){
-    sendPacket(addr64_n0, 0x00000000);
-    sendPacket(addr64_n1, 0x00000001);
-    sendPacket(addr64_n2, 0x00000002);
-    sendPacket(addr64_n3, 0x00000003);
-    sendPacket(addr64_n4, 0x00000004);
+    sendPacket(addr64_n0);
+    sendPacket(addr64_n1);
+    sendPacket(addr64_n2);
+    sendPacket(addr64_n3);
+    sendPacket(addr64_n4);
     //sendPacket(0x000000000000ffff);
     //Serial.println("Send!");
   }
@@ -96,11 +96,10 @@ void loop() {
   delay(50);
 }
 
-void sendPacket(XBeeAddress64 addr64, uint16_t addr16) {
+void sendPacket(XBeeAddress64 addr64) {
   // Prepare the Zigbee Transmit Request API packet
   ZBTxRequest txRequest;
   txRequest.setAddress64(addr64);
-  txRequest.setAddress16(addr16);
   uint8_t payload1[] = {
     0
   };
