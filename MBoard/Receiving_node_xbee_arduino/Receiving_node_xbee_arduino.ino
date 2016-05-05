@@ -51,17 +51,19 @@ void setup() {
   servoC.attach(A5);
 
 
-  pinMode(13, OUTPUT);
-
+  //Motor direction - OUT1 & OUT2
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
+  //Motor Speed
   pinMode(10, OUTPUT);
 
   digitalWrite(7, HIGH);
   digitalWrite(8, LOW);
-
+  
+  //Motor direction - OUT3 & OUT4
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
+   //Motor Speed
   pinMode(11, OUTPUT);
 
   digitalWrite(12, HIGH);
