@@ -77,9 +77,9 @@ void loop() {
   //payload[1] = pin5 & 0xff;
   //payload[0] = pin5;
   
-  Serial.print(abs(pin5 - lastPin5),DEC);
-  Serial.print(" ");
-  Serial.println();
+  //Serial.print(abs(pin5 - lastPin5),DEC);
+  //Serial.print(" ");
+  //Serial.println();
 
 
   // send only when something changes
@@ -107,6 +107,8 @@ void sendPacket(XBeeAddress64 addr64) {
   txRequest.setPayload(payload1, sizeof(payload1));
   // To send asynchronous messages
   txRequest.setFrameId(0);
+  //Serial.println(txRequest.getOption(), DEC);
+  txRequest.setOption(1);
   // And send it
   xbee.send(txRequest);
 
