@@ -83,11 +83,17 @@ void loop() {
     analogWrite(11, speed_);
     //analogWrite(10, 0);
     */
-     analogWrite(11, 0);
+     //analogWrite(11, 0);
      
     analogWrite(10, 255);
-    delay (50);
+    delay (35);
     analogWrite(10, 0);
+    delay (35);
+
+         
+    analogWrite(11, 255);
+    delay (50);
+    analogWrite(11, 0);
     delay (50);
 
     // MOTOR 2 - DC

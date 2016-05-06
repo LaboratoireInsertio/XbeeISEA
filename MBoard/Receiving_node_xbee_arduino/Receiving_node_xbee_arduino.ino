@@ -35,7 +35,7 @@ ModemStatusResponse msr = ModemStatusResponse();
 
 Servo servoA;
 Servo servoB;
-Servo servoC;
+
 
 
 Button switch_servo = Button(5, BUTTON_PULLUP_INTERNAL);
@@ -54,10 +54,11 @@ void setup() {
   Serial1.begin(57600);
   xbee.begin(Serial1);
 
-  servoA.attach(A1);
-  servoB.attach(A3);
-  servoC.attach(A5);
+  servoA.attach(A5);
+  servoB.attach(A4);
 
+  pinMode(A3, OUTPUT);
+  pinMode(A2, OUTPUT);
 
   //Motor 1 direction - OUT1 & OUT2
   pinMode(7, OUTPUT);
@@ -98,9 +99,9 @@ void loop() {
 
   while ( Serial.available() ) {
 
-    
+
     int data = Serial.read();
- 
+
 
     // Actuator # 0 = Servo
     if (switch_servo.isPressed()) {
@@ -108,7 +109,9 @@ void loop() {
       data = map(data, 0, 127, 0, 180);
       servoA.write(data);
       servoB.write(data);
-      servoC.write(data);
+
+
+      analogWrite(A3, data);
 
       Serial.println(data, DEC); // Echo
 
@@ -121,6 +124,9 @@ void loop() {
       if (data >= 125) {
         analogWrite(10, 255);
         analogWrite(11, 255);
+        delay (8);
+        analogWrite(10, 0);
+        analogWrite(11, 0);
 
       } else if (data <= 124) {
         analogWrite(10, 0);
@@ -131,7 +137,7 @@ void loop() {
 
     } else {
 
-      data = map(data, 0, 127, 0, 50);
+      data = map(data, 0, 127, 0, 255);
 
       analogWrite(10, data);
       analogWrite(11, data);
