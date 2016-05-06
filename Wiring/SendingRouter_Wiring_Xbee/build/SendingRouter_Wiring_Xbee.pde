@@ -18,7 +18,6 @@
  */
 
 #include <XBee.h>
-#include <Node.h>
 
 /*
 This example is for Series 2 XBee
@@ -29,34 +28,47 @@ This example is for Series 2 XBee
 // create the XBee object
 XBee xbee = XBee();
 
-// create an array of Node objects with the SH + SL Address of the 
-// receiving XBees
-Node nodes[] = {
-  Node(XBeeAddress64(0x0013a200, 0x40e66c13)),
-  Node(XBeeAddress64(0x0013a200, 0x40e66dd7)),
-  Node(XBeeAddress64(0x0013a200, 0x40e66c49)),
-  Node(XBeeAddress64(0x0013a200, 0x40e66c18)),
-  Node(XBeeAddress64(0x0013a200, 0x40e66c2f))
-  };
+//uint8_t payload[] = { 
+//  0
+//};
 
-  // FOR TESTING
-  int pin5 = 0;
+// SH + SL Address of receiving XBee
+XBeeAddress64 addr64_n0 = XBeeAddress64(0x0013a200, 0x40e66c13);
+XBeeAddress64 addr64_n1 = XBeeAddress64(0x0013a200, 0x40e66dd7);
+XBeeAddress64 addr64_n2 = XBeeAddress64(0x0013a200, 0x40e66c49);
+XBeeAddress64 addr64_n3 = XBeeAddress64(0x0013a200, 0x40e66c18);
+XBeeAddress64 addr64_n4 = XBeeAddress64(0x0013a200, 0x40e66c2f);
+
+// for broadcasting to all nodes in the network
+//XBeeAddress64 addr64_broad = XBeeAddress64(0x00000000, 0x0000ffff);
+
+//ZBTxRequest zbTx = ZBTxRequest(addr64_n0, payload, sizeof(payload));
+//ZBTxStatusResponse txStatus = ZBTxStatusResponse();
+
+int pin5 = 0;
+int lastPin5 = 0;
+//int val;
+
+int statusLed = 15;
+int errorLed = 15;
+
 
 void setup() {
-  // starts serial communication with computer
+  pinMode(statusLed, OUTPUT);
+  pinMode(errorLed, OUTPUT);
+
   Serial.begin(57600);
 
-  // starts serial communication with xBee
   Serial1.begin(57600);
   xbee.setSerial(Serial1);
 }
 
 void loop() {
+  //xbee.readPacket();
+
   // break down 10-bit reading into two bytes and place in payload
-  // USING PIN 5 FOR TESTING, UPDATE WITH VALUES FROM LIVE
+  lastPin5 = pin5;
   pin5 = analogRead(5)/4;
-  for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
-    nodes[i].setVal(pin5);
   //if (Serial.available()){
   //  val = int(Serial.read());
   //  Serial.println(val, DEC);
@@ -64,31 +76,74 @@ void loop() {
   //payload[0] = pin5 >> 8 & 0xff;
   //payload[1] = pin5 & 0xff;
   //payload[0] = pin5;
+  
+  //Serial.print(abs(pin5 - lastPin5),DEC);
+  //Serial.print(" ");
+  //Serial.println();
 
-  // sends messages to the nodes only if the values have changed
-  for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
-    if (nodes[i].valueHasChanged())
-      sendPacket(nodes[i].getAddress(), nodes[i].getVal());
+
+  // send only when something changes
+  if(abs(pin5 - lastPin5) > 2){
+    sendPacket(addr64_n0);
+    sendPacket(addr64_n1);
+    sendPacket(addr64_n2);
+    sendPacket(addr64_n3);
+    sendPacket(addr64_n4);
+    //sendPacket(0x000000000000ffff);
+    //Serial.println("Send!");
+  }
 
   delay(50);
 }
 
-void sendPacket(XBeeAddress64 addr64, uint8_t val) {
+void sendPacket(XBeeAddress64 addr64) {
   // Prepare the Zigbee Transmit Request API packet
   ZBTxRequest txRequest;
-  // Set the destination address of the message
   txRequest.setAddress64(addr64);
-  // THE data to be send
-  uint8_t payload[] = {
-    val
+  uint8_t payload1[] = {
+    0
   };
-  txRequest.setPayload(payload, sizeof(payload));
-  // Identifies the UART data frame for the host to correlate with a 
-  // subsequent ACK (acknowledgment). If set to 0, no response is sent.
+  payload1[0] = pin5;
+  txRequest.setPayload(payload1, sizeof(payload1));
+  // To send asynchronous messages
   txRequest.setFrameId(0);
-  // Disable ACK (acknowledgement)
+  //Serial.println(txRequest.getOption(), DEC);
   txRequest.setOption(1);
-  // Send the message
+  // And send it
   xbee.send(txRequest);
+
+  /*
+  // after sending a tx request, we expect a status response
+   // wait up to half second for the status response
+   if (xbee.readPacket(500)) {
+   // got a response!
+   
+   // should be a znet tx status            	
+   if (xbee.getResponse().getApiId() == ZB_TX_STATUS_RESPONSE) {
+   xbee.getResponse().getZBTxStatusResponse(txStatus);
+   
+   // get the delivery status, the fifth byte
+   if (txStatus.getDeliveryStatus() == SUCCESS) {
+   // success.  time to celebrate
+   flashLed(statusLed, 5, 50);
+   Serial.println(":)");
+   } 
+   else {
+   // the remote XBee did not receive our packet. is it powered on?
+   flashLed(errorLed, 3, 500);
+   //Serial.println(":(");
+   }
+   }
+   } 
+   else if (xbee.getResponse().isError()) {
+   //nss.print("Error reading packet.  Error code: ");  
+   //nss.println(xbee.getResponse().getErrorCode());
+   } 
+   else {
+   // local XBee did not provide a timely TX Status Response -- should not happen
+   flashLed(errorLed, 2, 50);
+   Serial.println(":(");
+   }
+   */
 }
 
