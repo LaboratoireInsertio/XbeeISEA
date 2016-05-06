@@ -115,14 +115,14 @@ void loop() {
     } else if (switch_solenoide.isPressed()) {
 
 
-      data = map(data, 0, 127, 0, 50);
+      data = map(data, 0, 127, 0, 255);
 
 
-      if (data >= 25) {
-        analogWrite(10, 50);
-        analogWrite(11, 50);
+      if (data >= 125) {
+        analogWrite(10, 255);
+        analogWrite(11, 255);
 
-      } else if (data <= 24) {
+      } else if (data <= 124) {
         analogWrite(10, 0);
         analogWrite(11, 0);
       }
