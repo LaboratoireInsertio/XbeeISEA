@@ -59,22 +59,31 @@ void loop() {
   // break down 10-bit reading into two bytes and place in payload
   // USING PIN 5 FOR TESTING, UPDATE WITH VALUES FROM LIVE
   pin5 = analogRead(5)/4;
-  for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
-    nodes[i].setVal(pin5);
-  //if (Serial.available()){
-  //  val = int(Serial.read());
-  //  Serial.println(val, DEC);
-  //}
-  //payload[0] = pin5 >> 8 & 0xff;
-  //payload[1] = pin5 & 0xff;
-  //payload[0] = pin5;
 
-  // sends messages to the nodes only if the values have changed
-  for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
-    if (nodes[i].valueHasChanged())
-      sendPacket(nodes[i].getAddress(), nodes[i].getVal());
+  while ( Serial.available() ) {
+    
+    int data = Serial.read();
+    data = map(data,1,127,0,180);
 
-  delay(50);
+    for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
+      nodes[i].setVal(data);
+    //if (Serial.available()){
+    //  val = int(Serial.read());
+    //  Serial.println(val, DEC);
+    //}
+    //payload[0] = pin5 >> 8 & 0xff;
+    //payload[1] = pin5 & 0xff;
+    //payload[0] = pin5;
+
+    // sends messages to the nodes only if the values have changed
+    for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
+      if (nodes[i].valueHasChanged())
+        sendPacket(nodes[i].getAddress(), nodes[i].getVal());
+
+    delay(50);
+
+    Serial.println(data,BYTE); // Echo
+  }
 }
 
 void sendPacket(XBeeAddress64 addr64, uint8_t val) {
