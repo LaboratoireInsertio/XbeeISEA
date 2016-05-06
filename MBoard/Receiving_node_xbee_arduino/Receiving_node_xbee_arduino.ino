@@ -82,9 +82,9 @@ void setup() {
 
 // continuously reads packets, looking for ZB Receive or Modem Status
 void loop() {
-  /*xbee.readPacket();
+  xbee.readPacket();
 
-    if (xbee.getResponse().isAvailable()) {
+  if (xbee.getResponse().isAvailable()) {
     // got something
 
     if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
@@ -94,55 +94,56 @@ void loop() {
       xbee.getResponse().getZBRxResponse(rx);
 
       // get value of the first byte in the data
-       int data = rx.getData(0);
-  */
-
-  while ( Serial.available() ) {
+      int data = rx.getData(0);
 
 
-    int data = Serial.read();
+      // while ( Serial.available() ) {
 
 
-    // Actuator # 0 = Servo
-    if (switch_servo.isPressed()) {
-
-      data = map(data, 0, 127, 0, 180);
-      servoA.write(data);
-      servoB.write(data);
+      // int data = Serial.read();
 
 
-      analogWrite(A3, data);
+      // Actuator # 0 = Servo
+      if (switch_servo.isPressed()) {
 
-      Serial.println(data, DEC); // Echo
-
-    } else if (switch_solenoide.isPressed()) {
-
-
-      data = map(data, 0, 127, 0, 255);
+        data = map(data, 0, 127, 0, 180);
+        servoA.write(data);
+        servoB.write(data);
 
 
-      if (data >= 125) {
-        analogWrite(10, 255);
-        analogWrite(11, 255);
-        delay (8);
-        analogWrite(10, 0);
-        analogWrite(11, 0);
+        analogWrite(A3, data);
 
-      } else if (data <= 124) {
-        analogWrite(10, 0);
-        analogWrite(11, 0);
+        Serial.println(data, DEC); // Echo
+
+      } else if (switch_solenoide.isPressed()) {
+
+
+        data = map(data, 0, 127, 0, 255);
+
+
+        if (data >= 125) {
+          analogWrite(10, 255);
+          analogWrite(11, 255);
+          delay (8);
+          analogWrite(10, 0);
+          analogWrite(11, 0);
+
+        } else if (data <= 124) {
+          analogWrite(10, 0);
+          analogWrite(11, 0);
+        }
+
+        Serial.println(data, DEC); // Echo
+
+      } else {
+
+        data = map(data, 0, 127, 0, 255);
+
+        analogWrite(10, data);
+        analogWrite(11, data);
+
+        Serial.println(data, DEC); // Echo
       }
-
-      Serial.println(data, DEC); // Echo
-
-    } else {
-
-      data = map(data, 0, 127, 0, 255);
-
-      analogWrite(10, data);
-      analogWrite(11, data);
-
-      Serial.println(data, DEC); // Echo
     }
   }
 }

@@ -21,7 +21,8 @@ void setup() {
 
   myservo.attach(A5);
 
-
+   pinMode(14, OUTPUT);
+    
   //Motor 1 direction - OUT1 & OUT2
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
@@ -48,15 +49,12 @@ void loop() {
   // Servo
   if (switch_servo.isPressed()) {
 
-    /*digitalWrite(13, HIGH);
+    digitalWrite(14, HIGH);
     delay (1000);
-    digitalWrite(13, LOW);
+    digitalWrite(14, LOW);
     delay (1000);
 
-    //myservo.write(pos); 
-    analogWrite(11, speed_);
-    analogWrite(10, 0);
-    */
+
      analogWrite(11, 0);
     
     for (pos = 0; pos < 180; pos += 1) // goes from 0 degrees to 180 degrees
@@ -73,16 +71,13 @@ void loop() {
     // MOTOR 1 - Solenoide
   } else if (switch_solenoide.isPressed()) {
 
-    /*  digitalWrite(13, HIGH);
+    digitalWrite(14, HIGH);
       delay (500);
-      digitalWrite(13, LOW);
+      digitalWrite(14, LOW);
       delay (500); 
 
 
-    myservo.write(pos); 
-    analogWrite(11, speed_);
-    //analogWrite(10, 0);
-    */
+  
      //analogWrite(11, 0);
      
     analogWrite(10, 255);
@@ -100,7 +95,7 @@ void loop() {
     
   } else {
 
-    // digitalWrite(13, LOW);
+    digitalWrite(14, HIGH);
 
     /* 
     myservo.write(pos); 

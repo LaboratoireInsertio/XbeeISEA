@@ -19,6 +19,7 @@
 
 #include <XBee.h>
 #include <Servo.h>
+#include <Button.h>
 
 /*
   This example is for Series 2 XBee
@@ -34,9 +35,11 @@ ModemStatusResponse msr = ModemStatusResponse();
 
 Servo servoA;
 Servo servoB;
-Servo servoC;
 
+Button switch_servo = Button(5, BUTTON_PULLUP_INTERNAL);
+Button switch_solenoide = Button(9, BUTTON_PULLUP_INTERNAL);
 
+int actuator = 0;
 
 void setup() {
 
@@ -46,16 +49,58 @@ void setup() {
   // refers to USB (CDC) communication; for TTL serial on pins 0 and
   // 1, use the Serial1 class.
 
-  // start serial
+  Serial.begin(57600);
+
   Serial1.begin(57600);
   xbee.begin(Serial1);
 
-  servoA.attach(A1);
-  servoB.attach(A3);
-  servoC.attach(A5);
+  //Switch D5
 
+  if (switch_servo.isPressed()) {
+
+    actuator = 1;
+
+    servoA.attach(A5);
+    servoB.attach(A4);
+
+    //Switch D9
+
+  } else if (switch_solenoide.isPressed()) {
+
+    actuator = 2;
+
+    //Motor 1 direction - OUT1 & OUT2
+    pinMode(7, OUTPUT);
+    pinMode(8, OUTPUT);
+    //Motor 1 Speed
+    pinMode(10, OUTPUT);
+
+    //Motor 2 direction - OUT3 & OUT4
+    pinMode(12, OUTPUT);
+    pinMode(13, OUTPUT);
+    //Motor 2 Speed
+    pinMode(11, OUTPUT);
+
+  } else {
+
+    actuator = 3;
+
+    //Motor 1 direction - OUT1 & OUT2
+    pinMode(7, OUTPUT);
+    pinMode(8, OUTPUT);
+    //Motor 1 Speed
+    pinMode(10, OUTPUT);
+
+    //Motor 2 direction - OUT3 & OUT4
+    pinMode(12, OUTPUT);
+    pinMode(13, OUTPUT);
+    //Motor 2 Speed
+    pinMode(11, OUTPUT);
+
+  }
 
 }
+
 
 // continuously reads packets, looking for ZB Receive or Modem Status
 void loop() {
@@ -71,16 +116,69 @@ void loop() {
       // now fill our zb rx class
       xbee.getResponse().getZBRxResponse(rx);
 
-      // set dataLed PWM to value of the first byte in the data
+      // get value of the first byte in the data
       int data = rx.getData(0);
 
-      data = map(data, 0, 255, 0, 180);
-      servoA.write(data);
-      servoB.write(data);
-      servoC.write(data);
 
+      // Actuator Servo
+      if (actuator == 1 ) {
+
+        data = map(data, 0, 255, 1, 180);
+
+        servoA.write(data);
+
+        servoB.write(data);
+
+
+
+        // Actuator Solenoide - Switch D9
+      } else if (actuator == 2) {
+
+
+        data = map(data, 0, 255, 0, 255);
+
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
+
+        digitalWrite(12, HIGH);
+        digitalWrite(13, LOW);
+
+        if (data >= 125) {
+
+          analogWrite(10, 255);
+          analogWrite(11, 255);
+          delay (8);
+          analogWrite(10, 0);
+          analogWrite(11, 0);
+
+        } else if (data <= 124) {
+
+          analogWrite(10, 0);
+          analogWrite(11, 0);
+        }
+
+
+
+      } else if (actuator == 3) {
+
+        data = map(data, 0, 255, 0, 255);
+
+
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
+
+        analogWrite(10, data);
+
+        digitalWrite(12, HIGH);
+        digitalWrite(13, LOW);
+
+        analogWrite(11, data);
+
+      }
 
     }
   }
+
 }
+
 
