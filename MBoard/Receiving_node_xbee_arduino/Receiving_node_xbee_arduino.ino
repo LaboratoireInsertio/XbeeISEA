@@ -19,6 +19,7 @@
 
 #include <XBee.h>
 #include <Servo.h>
+#include <Button.h>
 
 /*
   This example is for Series 2 XBee
@@ -37,12 +38,19 @@ Servo servoB;
 Servo servoC;
 
 
+Button switch_servo = Button(5, BUTTON_PULLUP_INTERNAL);
+Button switch_solenoide = Button(9, BUTTON_PULLUP_INTERNAL);
+
 void setup() {
+
   // start serial (Serial: 0 (RX) and 1 (TX). Used to receive (RX)
   // and transmit (TX) TTL serial data using the ATmega32U4 hardware
   // serial capability. Note that on the Leonardo, the Serial class
   // refers to USB (CDC) communication; for TTL serial on pins 0 and
   // 1, use the Serial1 class.
+
+  Serial.begin(57600);
+
   Serial1.begin(57600);
   xbee.begin(Serial1);
 
@@ -51,19 +59,19 @@ void setup() {
   servoC.attach(A5);
 
 
-  //Motor direction - OUT1 & OUT2
+  //Motor 1 direction - OUT1 & OUT2
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
-  //Motor Speed
+  //Motor 1 Speed
   pinMode(10, OUTPUT);
 
   digitalWrite(7, HIGH);
   digitalWrite(8, LOW);
-  
-  //Motor direction - OUT3 & OUT4
+
+  //Motor 2 direction - OUT3 & OUT4
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
-   //Motor Speed
+  //Motor 2 Speed
   pinMode(11, OUTPUT);
 
   digitalWrite(12, HIGH);
@@ -73,9 +81,9 @@ void setup() {
 
 // continuously reads packets, looking for ZB Receive or Modem Status
 void loop() {
-  xbee.readPacket();
+  /*xbee.readPacket();
 
-  if (xbee.getResponse().isAvailable()) {
+    if (xbee.getResponse().isAvailable()) {
     // got something
 
     if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
@@ -84,26 +92,51 @@ void loop() {
       // now fill our zb rx class
       xbee.getResponse().getZBRxResponse(rx);
 
-      // get value of the first byte in the data - type of motor
-      int actuator = rx.getData(0);
-      // get value of the second byte in the data - incoming values
-      int value = rx.getData(1);
+      // get value of the first byte in the data
+       int data = rx.getData(0);
+  */
 
-      // Actuator # 0 = Servo
-      if (actuator == 0) {
+  while ( Serial.available() ) {
 
-        value = map(value, 0, 255, 0, 180);
-        servoA.write(value);
-        servoB.write(value);
-        servoC.write(value);
-      } 
+    
+    int data = Serial.read();
+ 
 
-      // Actuator # 1 = DC Motors
-      if (actuator == 1){
-      value = map(value, 0, 255, 0, 255);
-      analogWrite(10, value);
-      analogWrite(11, value);
+    // Actuator # 0 = Servo
+    if (switch_servo.isPressed()) {
+
+      data = map(data, 0, 127, 0, 180);
+      servoA.write(data);
+      servoB.write(data);
+      servoC.write(data);
+
+      Serial.println(data, DEC); // Echo
+
+    } else if (switch_solenoide.isPressed()) {
+
+
+      data = map(data, 0, 127, 0, 50);
+
+
+      if (data >= 25) {
+        analogWrite(10, 50);
+        analogWrite(11, 50);
+
+      } else if (data <= 24) {
+        analogWrite(10, 0);
+        analogWrite(11, 0);
       }
+
+      Serial.println(data, DEC); // Echo
+
+    } else {
+
+      data = map(data, 0, 127, 0, 50);
+
+      analogWrite(10, data);
+      analogWrite(11, data);
+
+      Serial.println(data, DEC); // Echo
     }
   }
 }

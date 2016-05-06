@@ -9,7 +9,6 @@ Servo myservo;
 int pos = 0;
 
 Button switch_servo = Button(5, BUTTON_PULLUP_INTERNAL);
-
 Button switch_solenoide = Button(9, BUTTON_PULLUP_INTERNAL);
 
 int speed_ = 0;    // Motor speed_
