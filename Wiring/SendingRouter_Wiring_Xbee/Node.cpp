@@ -26,6 +26,7 @@ uint8_t Node::getVal()
 boolean Node::valueHasChanged()
 {
   if (_val != _lastValSend){
+    _lastValSend = _val;
     return true;
   }
   return false;

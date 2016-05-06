@@ -78,16 +78,16 @@ void sendPacket(XBeeAddress64 addr64, uint8_t val) {
   ZBTxRequest txRequest;
   // Set the destination address of the message
   txRequest.setAddress64(addr64);
-  // Identifies the UART data frame for the host to correlate with a 
-  // subsequent ACK (acknowledgment). If set to 0, no response is sent.
-  txRequest.setFrameId(0);
-  // Disable ACK (acknowledgement)
-  txRequest.setOption(1);
   // THE data to be send
   uint8_t payload[] = {
     val
   };
   txRequest.setPayload(payload, sizeof(payload));
+  // Identifies the UART data frame for the host to correlate with a 
+  // subsequent ACK (acknowledgment). If set to 0, no response is sent.
+  txRequest.setFrameId(0);
+  // Disable ACK (acknowledgement)
+  txRequest.setOption(1);
   // Send the message
   xbee.send(txRequest);
 }

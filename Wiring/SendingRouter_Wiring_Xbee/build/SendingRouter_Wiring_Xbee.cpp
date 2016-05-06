@@ -43,7 +43,7 @@ Node nodes[] = {
   Node(XBeeAddress64(0x0013a200, 0x40e66c2f))
   };
 
-  // for testing
+  // FOR TESTING
   int pin5 = 0;
 
 void setup() {
@@ -57,6 +57,7 @@ void setup() {
 
 void loop() {
   // break down 10-bit reading into two bytes and place in payload
+  // USING PIN 5 FOR TESTING, UPDATE WITH VALUES FROM LIVE
   pin5 = analogRead(5)/4;
   for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
     nodes[i].setVal(pin5);
@@ -68,6 +69,7 @@ void loop() {
   //payload[1] = pin5 & 0xff;
   //payload[0] = pin5;
 
+  // sends messages to the nodes only if the values have changed
   for (int i = 0; i < (sizeof(nodes)/sizeof(Node)); i++)
     if (nodes[i].valueHasChanged())
       sendPacket(nodes[i].getAddress(), nodes[i].getVal());
@@ -80,16 +82,16 @@ void sendPacket(XBeeAddress64 addr64, uint8_t val) {
   ZBTxRequest txRequest;
   // Set the destination address of the message
   txRequest.setAddress64(addr64);
-  // Identifies the UART data frame for the host to correlate with a 
-  // subsequent ACK (acknowledgment). If set to 0, no response is sent.
-  txRequest.setFrameId(0);
-  // Disable ACK (acknowledgement)
-  txRequest.setOption(1);
   // THE data to be send
   uint8_t payload[] = {
     val
   };
   txRequest.setPayload(payload, sizeof(payload));
+  // Identifies the UART data frame for the host to correlate with a 
+  // subsequent ACK (acknowledgment). If set to 0, no response is sent.
+  txRequest.setFrameId(0);
+  // Disable ACK (acknowledgement)
+  txRequest.setOption(1);
   // Send the message
   xbee.send(txRequest);
 }
