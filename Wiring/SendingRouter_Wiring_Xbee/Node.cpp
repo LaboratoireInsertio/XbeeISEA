@@ -6,11 +6,17 @@
 #include "Node.h"
 #include "XBee.h"
 
-Node::Node(XBeeAddress64 addr64)
+Node::Node(XBeeAddress64 addr64, uint8_t note)
 {
   _addr64 = addr64;
+  _note = note;
   _val = 0;
   _lastValSend = 0;
+}
+
+uint8_t Node::getNote()
+{
+  return _note;
 }
 
 void Node::setVal(uint8_t val)
