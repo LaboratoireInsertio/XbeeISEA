@@ -146,28 +146,43 @@ void loop() {
       } else if (actuator == DC) {
         data = map(data, 0, 255, 0, 255);
 
-        if (data < 128) {
-          digitalWrite(7, LOW);
-          digitalWrite(8, HIGH);
+        // ONE DIRECTION DC MOTOR
+        
+        digitalWrite(7, HIGH);
+        digitalWrite(8, LOW);
 
-          analogWrite(10, 255 - map(data, 0, 127, 0, 255));
+        analogWrite(10, data);
 
-          digitalWrite(12, LOW);
-          digitalWrite(13, HIGH);
+        digitalWrite(12, HIGH);
+        digitalWrite(13, LOW);
 
-          analogWrite(11, 255 - map(data, 0, 127, 0, 255));
+        analogWrite(11, data);
 
-        } else {
-          digitalWrite(7, HIGH);
-          digitalWrite(8, LOW);
 
-          analogWrite(10, map(data, 128, 255, 0, 255));
+        // TWO DIRECTIONAL DC MOTOR
 
-          digitalWrite(12, HIGH);
-          digitalWrite(13, LOW);
+        /* if (data < 128) {
+           digitalWrite(7, LOW);
+           digitalWrite(8, HIGH);
 
-          analogWrite(11, map(data, 128, 255, 0, 255));
-        }
+           analogWrite(10, 255 - map(data, 0, 127, 0, 255));
+
+           digitalWrite(12, LOW);
+           digitalWrite(13, HIGH);
+
+           analogWrite(11, 255 - map(data, 0, 127, 0, 255));
+
+         } else {
+           digitalWrite(7, HIGH);
+           digitalWrite(8, LOW);
+
+           analogWrite(10, map(data, 128, 255, 0, 255));
+
+           digitalWrite(12, HIGH);
+           digitalWrite(13, LOW);
+
+           analogWrite(11, map(data, 128, 255, 0, 255));
+         }*/
       }
     }
   }
