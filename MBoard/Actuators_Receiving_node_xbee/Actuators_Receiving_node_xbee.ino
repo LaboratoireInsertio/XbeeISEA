@@ -21,6 +21,10 @@
 #include <Servo.h>
 #include <Button.h>
 
+#define DC       0
+#define SERVO    1
+#define SOLENOID 2
+
 /*
   This example is for Series 2 XBee
   Receives a ZB RX packet and sets a PWM value based on packet data.
@@ -39,16 +43,14 @@ Servo servoB;
 Button switch_servo = Button(5, BUTTON_PULLUP_INTERNAL);
 Button switch_solenoide = Button(9, BUTTON_PULLUP_INTERNAL);
 
-int actuator = 0;
+int actuator = DC;
 
 void setup() {
-
   // start serial (Serial: 0 (RX) and 1 (TX). Used to receive (RX)
   // and transmit (TX) TTL serial data using the ATmega32U4 hardware
   // serial capability. Note that on the Leonardo, the Serial class
   // refers to USB (CDC) communication; for TTL serial on pins 0 and
   // 1, use the Serial1 class.
-
   Serial.begin(57600);
 
   Serial1.begin(57600);
@@ -57,17 +59,14 @@ void setup() {
   //Switch D5
 
   if (switch_servo.isPressed()) {
-
-    actuator = 1;
+    actuator = SERVO;
 
     servoA.attach(A5);
     servoB.attach(A4);
 
     //Switch D9
-
   } else if (switch_solenoide.isPressed()) {
-
-    actuator = 2;
+    actuator = SOLENOID;
 
     //Motor 1 direction - OUT1 & OUT2
     pinMode(7, OUTPUT);
@@ -82,8 +81,7 @@ void setup() {
     pinMode(11, OUTPUT);
 
   } else {
-
-    actuator = 3;
+    actuator = DC;
 
     //Motor 1 direction - OUT1 & OUT2
     pinMode(7, OUTPUT);
@@ -98,18 +96,15 @@ void setup() {
     pinMode(11, OUTPUT);
 
   }
-
 }
 
 
 // continuously reads packets, looking for ZB Receive or Modem Status
 void loop() {
-
   xbee.readPacket();
 
   if (xbee.getResponse().isAvailable()) {
     // got something
-
     if (xbee.getResponse().getApiId() == ZB_RX_RESPONSE) {
       // got a zb rx packet
 
@@ -119,22 +114,15 @@ void loop() {
       // get value of the first byte in the data
       int data = rx.getData(0);
 
-
       // Actuator Servo
-      if (actuator == 1 ) {
-
+      if (actuator == SERVO ) {
         data = map(data, 0, 255, 1, 180);
 
         servoA.write(data);
-
         servoB.write(data);
 
-
-
         // Actuator Solenoide - Switch D9
-      } else if (actuator == 2) {
-
-
+      } else if (actuator == SOLENOID) {
         data = map(data, 0, 255, 0, 255);
 
         digitalWrite(7, HIGH);
@@ -144,7 +132,6 @@ void loop() {
         digitalWrite(13, LOW);
 
         if (data >= 125) {
-
           analogWrite(10, 255);
           analogWrite(11, 255);
           delay (8);
@@ -152,33 +139,37 @@ void loop() {
           analogWrite(11, 0);
 
         } else if (data <= 124) {
-
           analogWrite(10, 0);
           analogWrite(11, 0);
         }
 
-
-
-      } else if (actuator == 3) {
-
+      } else if (actuator == DC) {
         data = map(data, 0, 255, 0, 255);
 
+        if (data < 128) {
+          digitalWrite(7, LOW);
+          digitalWrite(8, HIGH);
 
-        digitalWrite(7, HIGH);
-        digitalWrite(8, LOW);
+          analogWrite(10, 255 - map(data, 0, 127, 0, 255));
 
-        analogWrite(10, data);
+          digitalWrite(12, LOW);
+          digitalWrite(13, HIGH);
 
-        digitalWrite(12, HIGH);
-        digitalWrite(13, LOW);
+          analogWrite(11, 255 - map(data, 0, 127, 0, 255));
 
-        analogWrite(11, data);
+        } else {
+          digitalWrite(7, HIGH);
+          digitalWrite(8, LOW);
 
+          analogWrite(10, map(data, 128, 255, 0, 255));
+
+          digitalWrite(12, HIGH);
+          digitalWrite(13, LOW);
+
+          analogWrite(11, map(data, 128, 255, 0, 255));
+        }
       }
-
     }
   }
-
 }
-
 
