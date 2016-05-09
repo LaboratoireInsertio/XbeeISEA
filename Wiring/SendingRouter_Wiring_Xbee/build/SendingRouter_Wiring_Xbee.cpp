@@ -41,12 +41,12 @@ Slip slip = Slip(Serial, onReceive);
 
 // create an array of Node objects with the SH + SL Address of the 
 // receiving XBees and the assigned notes
-Node nodes[] = {
-  Node(XBeeAddress64(0x0013a200, 0x40e66c13), 64),  // 64 - E3
-  Node(XBeeAddress64(0x0013a200, 0x40e66dd7), 65),  // 65 - F3
-  Node(XBeeAddress64(0x0013a200, 0x40e66c49), 66),  // 66 - F#3
-  Node(XBeeAddress64(0x0013a200, 0x40e66c18), 67),  // 67 - G3
-  Node(XBeeAddress64(0x0013a200, 0x40e66c2f), 68)   // 68 - G#3
+Node nodes[] = { 
+  Node(XBeeAddress64(0x0013a200, 0x40e66c13), 72),  // 72 - C4
+  Node(XBeeAddress64(0x0013a200, 0x40e66dd7), 73),  // 73 - C#4
+  Node(XBeeAddress64(0x0013a200, 0x40e66c49), 74),  // 74 - D4
+  Node(XBeeAddress64(0x0013a200, 0x40e66c18), 75),  // 75 - D#4
+  Node(XBeeAddress64(0x0013a200, 0x40e66c2f), 67)   // 76 - E4
   };
 
   // FOR TESTING
