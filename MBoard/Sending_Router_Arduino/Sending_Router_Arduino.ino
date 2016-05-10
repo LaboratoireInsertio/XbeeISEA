@@ -86,7 +86,7 @@ Node nodes[] = {
   Node(XBeeAddress64(0x0013a200, 0x40e66dd3), 51),  // 51 - D#2
   Node(XBeeAddress64(0x0013a200, 0x40e66dcc), 52), */ // 52 - E2   
   
-
+  /*
   Node(XBeeAddress64(0x0013a200, 0x40e66c59), 60),  // 60 - C3
   Node(XBeeAddress64(0x0013a200, 0x40e66d8d), 61),  // 61 - C#3
   Node(XBeeAddress64(0x0013a200, 0x40e66da1), 62),  // 62 - D3
@@ -97,13 +97,13 @@ Node nodes[] = {
   Node(XBeeAddress64(0x0013a200, 0x40e66dd7), 73),  // 73 - C#4
   Node(XBeeAddress64(0x0013a200, 0x40e66c49), 74),  // 74 - D4
   Node(XBeeAddress64(0x0013a200, 0x40e66c18), 75),  // 75 - D#4
-  Node(XBeeAddress64(0x0013a200, 0x40e66c2f), 76),  // 76 - E4
+  Node(XBeeAddress64(0x0013a200, 0x40e66c2f), 76),  // 76 - E4*/
   
-  Node(XBeeAddress64(0x0013a200, 0x40e66c28), 84),  // 84 - C5
-  Node(XBeeAddress64(0x0013a200, 0x40e66c55), 85),  // 85 - C#5
-  Node(XBeeAddress64(0x0013a200, 0x40e66c3e), 86),  // 86 - D5
-  Node(XBeeAddress64(0x0013a200, 0x40e66c12), 87),  // 87 - D#5
-  Node(XBeeAddress64(0x0013a200, 0x40e66c48), 88),  // 88 - E5
+  Node(XBeeAddress64(0x0013a200, 0x40e66dc3), 84),  // 84 - C5
+  Node(XBeeAddress64(0x0013a200, 0x40e668e9), 85),  // 85 - C#5
+  Node(XBeeAddress64(0x0013a200, 0x40e66c37), 86),  // 86 - D5
+  Node(XBeeAddress64(0x0013a200, 0x40e66dd9), 87),  // 87 - D#5
+  Node(XBeeAddress64(0x0013a200, 0x40e668ea), 88) /*,  // 88 - E5
   
   Node(XBeeAddress64(0x0013a200, 0x40e66c50), 96),  // 96 - C6
   Node(XBeeAddress64(0x0013a200, 0x40e66c14), 97),  // 97 - C#6
