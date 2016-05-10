@@ -77,17 +77,21 @@ Node nodes[] = {
 // create an array of Node objects with the SH + SL Address of the 
 // receiving XBees and the assigned notes
 Node nodes[] = { 
+  
+  /*
+  
   Node(XBeeAddress64(0x0013a200, 0x40e66c5f), 48),  // 48 - C2
   Node(XBeeAddress64(0x0013a200, 0x40e66c56), 49),  // 49 - C#2
   Node(XBeeAddress64(0x0013a200, 0x40e66dd4), 50),  // 50 - D2
   Node(XBeeAddress64(0x0013a200, 0x40e66dd3), 51),  // 51 - D#2
-  Node(XBeeAddress64(0x0013a200, 0x40e66dcc), 52)  /*,  // 52 - E2   
- 
-  Node(XBeeAddress64(0x0013a200, 0x40e66c1d), 60),  // 60 - C3
-  Node(XBeeAddress64(0x0013a200, 0x40e66c3c), 61),  // 61 - C#3
-  Node(XBeeAddress64(0x0013a200, 0x40e668d4), 62),  // 62 - D3
-  Node(XBeeAddress64(0x0013a200, 0x40e66c5b), 63),  // 63 - D#3
-  Node(XBeeAddress64(0x0013a200, 0x40e66c46), 64),  // 64 - E3
+  Node(XBeeAddress64(0x0013a200, 0x40e66dcc), 52), */ // 52 - E2   
+  
+
+  Node(XBeeAddress64(0x0013a200, 0x40e66c59), 60),  // 60 - C3
+  Node(XBeeAddress64(0x0013a200, 0x40e66d8d), 61),  // 61 - C#3
+  Node(XBeeAddress64(0x0013a200, 0x40e66da1), 62),  // 62 - D3
+  Node(XBeeAddress64(0x0013a200, 0x40e66dd8), 63),  // 63 - D#3
+  Node(XBeeAddress64(0x0013a200, 0x40e66dd6), 64) /*,  // 64 - E3
   
   Node(XBeeAddress64(0x0013a200, 0x40e66c13), 72),  // 72 - C4
   Node(XBeeAddress64(0x0013a200, 0x40e66dd7), 73),  // 73 - C#4
