@@ -8,9 +8,9 @@
 			"architecture" : "x64"
 		}
 ,
-		"rect" : [ 121.0, 89.0, 1204.0, 649.0 ],
+		"rect" : [ 814.0, 280.0, 545.0, 172.0 ],
 		"bglocked" : 0,
-		"openinpresentation" : 0,
+		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
 		"default_fontface" : 0,
 		"default_fontname" : "Arial",
@@ -857,7 +857,7 @@
 							"architecture" : "x64"
 						}
 ,
-						"rect" : [ 130.0, 185.0, 518.0, 59.0 ],
+						"rect" : [ 823.0, 376.0, 518.0, 71.0 ],
 						"bgcolor" : [ 1.0, 1.0, 1.0, 0.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 1,
@@ -904,7 +904,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 149.75, 468.0, 20.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 228.0, 5.0, 20.0, 20.0 ]
+									"presentation_rect" : [ 100.5, 46.0, 20.0, 20.0 ]
 								}
 
 							}
@@ -919,7 +919,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 811.0, 595.0, 150.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 224.5, 30.0, 292.5, 20.0 ],
+									"presentation_rect" : [ 224.5, 46.0, 292.0, 20.0 ],
 									"text" : "COM15"
 								}
 
@@ -950,7 +950,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 115.0, 100.0, 150.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 257.0, 5.0, 93.0, 20.0 ],
+									"presentation_rect" : [ 127.5, 20.0, 93.0, 20.0 ],
 									"text" : "available ports :"
 								}
 
@@ -994,7 +994,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 115.0, 100.0, 150.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 130.5, 5.0, 43.0, 20.0 ],
+									"presentation_rect" : [ 3.0, 46.0, 43.0, 20.0 ],
 									"text" : "state :"
 								}
 
@@ -1011,7 +1011,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 718.0, 508.0, 150.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 130.5, 30.0, 91.0, 20.0 ],
+									"presentation_rect" : [ 127.5, 46.0, 91.0, 20.0 ],
 									"text" : "selected port :"
 								}
 
@@ -1028,7 +1028,7 @@
 									"numoutlets" : 0,
 									"patching_rect" : [ 85.0, 70.0, 150.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 5.0, 30.0, 43.0, 20.0 ],
+									"presentation_rect" : [ 3.0, 20.0, 43.0, 20.0 ],
 									"text" : "baud :"
 								}
 
@@ -1185,7 +1185,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 450.0, 195.0, 100.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 176.5, 5.0, 49.5, 20.0 ],
+									"presentation_rect" : [ 49.0, 46.0, 49.5, 20.0 ],
 									"prototypename" : "grill_bordered",
 									"text" : "active",
 									"textcolor" : [ 0.968627, 0.968627, 0.968627, 1.0 ],
@@ -1308,7 +1308,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 316.0, 145.0, 100.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 54.0, 30.0, 68.0, 20.0 ]
+									"presentation_rect" : [ 52.0, 20.0, 68.0, 20.0 ]
 								}
 
 							}
@@ -1374,7 +1374,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 729.5, 205.0, 100.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 353.0, 5.0, 45.0, 20.0 ],
+									"presentation_rect" : [ 224.5, 20.0, 45.0, 20.0 ],
 									"prototypename" : "b&w",
 									"rounded" : 8.0,
 									"text" : "refresh",
@@ -1434,7 +1434,7 @@
 									"parameter_enable" : 0,
 									"patching_rect" : [ 347.0, 650.0, 145.0, 20.0 ],
 									"presentation" : 1,
-									"presentation_rect" : [ 401.0, 5.0, 116.0, 20.0 ]
+									"presentation_rect" : [ 272.5, 20.0, 244.0, 20.0 ]
 								}
 
 							}
@@ -2061,7 +2061,7 @@
 ,
 					"patching_rect" : [ 211.0, 402.0, 301.0, 108.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 9.0, 96.0, 518.0, 59.0 ],
+					"presentation_rect" : [ 9.0, 96.0, 518.0, 71.0 ],
 					"varname" : "patcher"
 				}
 
