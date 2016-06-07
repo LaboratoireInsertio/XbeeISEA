@@ -29,7 +29,7 @@ void setup() {
   Serial.begin(57600);
 
   // starts serial communication with xBee
-  Serial1.begin(57600);
+  Serial1.begin(115200);
   xbee.setSerial(Serial1);
 
   // Prepare the Zigbee Transmit Request API packet
